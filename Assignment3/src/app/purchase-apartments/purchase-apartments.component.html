@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Purchase Apartments</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Select Buyer</mat-label>
+    <mat-select [(ngModel)]="selectedBuyer" >
+      <mat-option *ngFor="let buyer of buyers" [value]="buyer.id">
+        {{buyer.fullName}} - {{currencyFormatter.format(buyer.credits)}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-card *ngIf="errorMessage">
+    <mat-card-title style="color: red">Unable To Process Transaction</mat-card-title>
+    <mat-card-content>
+      <p>
+        <mat-list role="list">
+          <mat-list-item role="listitem">Insufficient Credits In Order To Complete the purchase</mat-list-item>
+          <mat-list-item role="listitem">This Apartment is already purchased</mat-list-item>
+          <mat-list-item role="listitem">Apartment or Buyer are unavailable</mat-list-item>
+        </mat-list>
+      </p>
+    </mat-card-content>
+  </mat-card>
+  <mat-card *ngIf="successMessage">
+    <mat-card-title style="color: green">Transaction Succeeded</mat-card-title>
+  </mat-card>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [disabled]="" (click)="purchase()">Purchase</button>
+</div>

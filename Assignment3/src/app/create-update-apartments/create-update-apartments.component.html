@@ -1,0 +1,35 @@
+<div mat-dialog-content>
+
+  <button mat-mini-fab color="primary" type="submit" *ngIf="editButton" (click)="enableEditMode();$event.stopImmediatePropagation()"><mat-icon>drive_file_rename_outline</mat-icon></button>
+  <form #form="ngForm" [formGroup]="myForm" (submit)="saveApartment()">
+  <mat-form-field appearance="fill">
+  <mat-label>Title</mat-label>
+  <input matInput required name="title" formControlName="title" type="text" [readonly]="readonlyMode" [(ngModel)]="apartmentEditCreate.title" >
+</mat-form-field>
+
+<mat-form-field appearance="fill">
+  <mat-label>Select Number Of Rooms</mat-label>
+  <mat-select required formControlName="nbOfRooms"  [disabled]="readonlyMode" [(ngModel)]="apartmentEditCreate.nbOfRooms" type="number">
+    <mat-option   *ngFor="let item of [1,2,3,4,5,6,7,8]; let i = index" [value]="i+1">
+      {{i+1}}
+    </mat-option>
+  </mat-select>
+  <mat-error></mat-error>
+</mat-form-field>
+<mat-form-field appearance="fill">
+  <mat-label>Address</mat-label>
+  <textarea required  matInput name="address" formControlName="address"  [readonly]="readonlyMode" [(ngModel)]="apartmentEditCreate.address"></textarea>
+</mat-form-field >
+  <mat-form-field *ngIf="priceField" appearance="fill">
+    <mat-label>Price</mat-label>
+    <input required type="number" name="price"  formControlName="price"  [readonly]="readonlyMode" [(ngModel)]="apartmentEditCreate.price" matInput >
+  </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" type="submit" *ngIf="submitButton" [disabled]="form.invalid">Submit</button>
+  </form>
+  <mat-card *ngIf="successMessage">
+    <p style="color: green"> Success </p>
+  </mat-card>
+</div>
+
+
